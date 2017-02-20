@@ -306,3 +306,9 @@ Another refinement that is worth exploring deals with the creation of the
 space-saving sentences. Right now they are created as partial sentences, but
 they could be created as full sentences. This might be better but the tradeoffs
 should be explored.
+
+## Contributing
+
+Corrections are welcome in the form of pull requests. Clarifications or
+questions are welcome in the form of issues. In that manner questions will be
+available to be answered by newcomers.
