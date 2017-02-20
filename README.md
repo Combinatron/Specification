@@ -75,13 +75,14 @@ notation, e.g. `S_1 := <B C K>`.  Additions are indicated by a plus, e.g.
 ## Semantics
 
 Now that the definitions and major concepts are out of the way I'll outline the
-actual operational semantics of how the machine works. To determine what the
-current word is the machine examines the first word in the bottom cursor. It
-then proceeds to examine or manipulate the other cursors as necessary. To
-clarify and avoid obscuring concepts by specificity I'll refrain from using
-actual words unless appropriate. Relevant words that can take on any valid word
-will be denoted by a lowercase variable whose meaning should be appropriate from
-context. Irrelevant words are denoted by an underscore.
+actual operational semantics of how the machine works. To start a sentence is
+indicated as the starting point and is loaded into the bottom cursor. To
+determine what the current word is the machine examines the first word in the
+bottom cursor. It then proceeds to examine or manipulate the other cursors as
+necessary. To clarify and avoid obscuring concepts by specificity I'll refrain
+from using actual words unless appropriate. Relevant words that can take on any
+valid word will be denoted by a lowercase variable whose meaning should be
+inferred from context. Irrelevant words are denoted by an underscore.
 
 ### Nesting and Unnesting
 
@@ -129,7 +130,7 @@ semantic block can be rephrased more accurately.
 ```
 
 Unnesting is a similar operation, but in reverse. The cursors are rotated down,
-and the sentence pointed to be the top cursor is fetched from the Index. If that
+and the sentence pointed to by the top cursor is fetched from the Index. If that
 sentence doesn't exist then the top cursor remains empty. Unnesting only happens
 when the bottom cursor has a single word in its sentence. That word is then
 copied to the middle cursor, overwriting the M word, before the cursors are
