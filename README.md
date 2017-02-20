@@ -297,12 +297,6 @@ don't have anything formally defined yet.
 
 ### Minor Refinements
 
-I'm not satisfied with the idea of M and N words. M words pose problems in the
-presence of cycles because they could be pulled into the bottom cursor and then
-there would be no valid reduction form. Cycles pose some other problems as well,
-so a tempting solution is to ban cycles. I'm not sure how practical this is
-though.
-
 Another refinement that is worth exploring deals with the creation of the
 space-saving sentences. Right now they are created as partial sentences, but
 they could be created as full sentences. This might be better but the tradeoffs
