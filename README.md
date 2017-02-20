@@ -278,7 +278,7 @@ And the double rotation down.
 
 ### Halting
 
-Computation halts if any of the above reduction forms aren't meant.
+Computation halts if any of the above reduction forms aren't met.
 
 ## Todos
 
