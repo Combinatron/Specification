@@ -269,11 +269,25 @@ because it cannot overwrite the bottom cursor and cannot use the entire top
 cursor. Therefore a nested sentence is created to allow room. The cursors are
 also rotated down.
 
+Reduction, note that a new word needs to be written to the index at this point.
+
 ```
 {0 < 0 0 0>}    {0 < 0 0 0>}
-{1 <M0 b c>} -> {0 < 0 0 0>}, S_3 := <a b 0>, S_2 := <W a 0>
+{1 <M0 b c>} -> {1 <N3 b c>}, S_3 := <a b 0>
+{2 < W a 0>}    {2 < W a 0>}
+```
+
+Rotation:
+
+```
+{0 < 0 0 0>}    {0 < 0 0 0>}
+{1 <N3 b c>} -> {0 < 0 0 0>}, S_2 := <W a 0>
 {2 < W a 0>}    {1 <N3 b c>}
 ```
+
+Note that in this reduction the M word is overwritten in the middle cursor.
+Because this is immediately followed by a downward rotation this is fine and
+cannot result in an inconsistent state.
 
 #### C Combinator
 
