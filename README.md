@@ -136,60 +136,81 @@ bottom cursor is a nesting word.
 
 Recall that the nesting word encodes a pointer to a sentence in the Index. The
 basic idea of nesting is simply to rotate the cursors up by pulling the pointed
-to sentence into the bottom cursor.
+to sentence into the bottom cursor. However, in addition to the rotation, the
+nesting word must also be transformed into an unnesting word so the cursors can
+be rotated down later. So nesting operates in two steps: the rotation up, and
+then a mutation to the original nesting word. Shown below is a nesting operation
+from the initial state of a program.
+
+First the cursors are rotated up:
 
 ```
-{1 < a _ _>}    {2 < b _ _>}
-{2 < b _ _>} -> {3 <N4 _ _>}, S_1 := <a _ _>
-{3 <N4 _ _>}    {4      S_4}
+{0 < 0 0 0>}    {0 < 0 0 0>}
+{0 < 0 0 0>} -> {1 <N2 _ _>}
+{1 <N2 _ _>}    {2      S_2}
 ```
 
-This is appropriate until a reduction forces the stack to be unwound and the
-cursors to be rotated down, like so:
+Then the nesting word is converted to an unnesting word:
 
 ```
-{1 < a _ _>}    {   ?     }
-{2 < b _ _>} -> {1 <a _ _>}, S_2 := <N4 _ _>
-{3 <N4 _ _>}    {2 <b _ _>}
+{0 < 0 0 0>}    {0 < 0 0 0>}
+{1 <N2 _ _>} -> {1 <M0 _ _>}
+{2      S_2}    {2      S_2}
 ```
 
-As can be seen it is not immediately apparent where the new top cursor should
-come from. This is the role of the M word, and for this reason when nesting the
-N word responsible for the nest is always transformed into an M word. See:
+Next is an example of what a nesting operation looks like without a null cursor.
 
-```
-{1 < a _ _>}    {2 < b _ _>}
-{2 < b _ _>} -> {3 <M2 _ _>}, S_1 := <a _ _>
-{3 <N4 _ _>}    {4      S_4}
-```
-
-The new M word always points to the location in the middle cursor. If the middle
-cursor is empty, the new M word points to the 0th sentence in the Index, which
-doesn't exist. Because this transformation from N to M always happens, the above
-semantic block can be rephrased more accurately.
+The rotation up:
 
 ```
 {1 <M0 _ _>}    {2 <M1 _ _>}
-{2 <M1 _ _>} -> {3 <M2 _ _>}, S_1 := <M0 _ _>
+{2 <M1 _ _>} -> {3 <N4 _ _>}, S_1 := <M0 _ _>
 {3 <N4 _ _>}    {4      S_4}
 ```
 
-Unnesting is a similar operation, but in reverse. The cursors are rotated down,
-and the sentence pointed to by the top cursor is fetched from the Index. If that
-sentence doesn't exist then the top cursor remains empty. Unnesting only happens
-when the bottom cursor has a single word in its sentence. That word is then
-copied to the middle cursor, overwriting the M word, before the cursors are
-rotated.
+Then the nesting word mutation:
+
+```
+{2 <M1 _ _>}    {2 <M1 _ _>}
+{3 <N4 _ _>} -> {3 <M2 _ _>}
+{4      S_4}    {4      S_4}
+```
+
+Unnesting is a similar operation, but in reverse. To start, unnesting only
+happens when the bottom cursor has a single word in its sentence. That word is
+copied to the middle cursor, overwriting the M word in the middle cursor. Then
+the cursors are rotated down. The first example includes null cursors, the
+second does not.
+
+The bottom word is copied:
+
+```
+{0 < 0 0 0>}    {0 <0 0 0>}
+{1 <M0 _ _>} -> {1 <a _ _>}
+{2 < a 0 0>}    {2 <a 0 0>}
+```
+
+Then the cursors are rotated down:
+
+```
+{0 <0 0 0>}    {0 <0 0 0>}
+{1 <a _ _>} -> {0 <0 0 0>}, S_2 := <a 0 0>
+{2 <a 0 0>}    {1 <a _ _>}
+```
+
+Now without null cursors, first the bottom word is copied:
+
+```
+{2 <M1 _ _>}    {2 <M1 _ _>}
+{3 <M2 _ _>} -> {3 < a _ _>}
+{4 < a 0 0>}    {4 < a 0 0>}
+```
+
+Then the cursors are rotated down:
 
 ```
 {2 <M1 _ _>}    {1      S_1}
-{3 <M2 _ _>} -> {2 <M1 _ _>}, S_4 := <a _ _>
-{4 < a 0 0>}    {3 < a _ _>}
-```
-
-```
-{2 <M0 _ _>}    {0 < 0 0 0>}
-{3 <M2 _ _>} -> {2 <M1 _ _>}, S_4 := <a _ _>
+{3 < a _ _>} -> {2 <M1 _ _>}, S_4 := <a 0 0>
 {4 < a 0 0>}    {3 < a _ _>}
 ```
 
