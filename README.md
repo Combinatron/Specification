@@ -296,40 +296,81 @@ rule. Instead it has two double cursor rules and a single triple cursor rule.
 The first double cursor rule is applied when the C combinator has two arguments
 already.
 
+Reduction:
+
 ```
 {0 < 0 0 0>}    {0 < 0 0 0>}
-{1 <M0 c d>} -> {0 < 0 0 0>}, S_2 := <C a b>, S_3 := <a c 0>
+{1 <M0 c d>} -> {1 <N3 b d>}, S_3 := <a c 0>
+{2 < C a b>}    {2 < C a b>}
+```
+
+Rotation:
+
+```
+{0 < 0 0 0>}    {0 < 0 0 0>}
+{1 <N3 b d>} -> {0 < 0 0 0>}, S_2 := <C a b>
 {2 < C a b>}    {1 <N3 b d>}
 ```
 
 When the C combinator only has a single argument it doesn't need an extra
 sentence because all words in the middle cursor are used as arguments.
 
+Reduction:
+
 ```
 {0 < 0 0 0>}    {0 <0 0 0>}
-{1 <M0 b c>} -> {0 <0 0 0>}, S_2 := <C a 0>
-{2 < C a 0>}    {1 <a c b>}
+{1 <M0 b c>} -> {1 <a c b>}
+{2 < C a 0>}    {2 <C a 0>}
+```
+
+Rotation:
+
+```
+{0 <0 0 0>}    {0 <0 0 0>}
+{1 <a c b>} -> {0 <0 0 0>}, S_2 := <C a 0>
+{2 <C a 0>}    {1 <C a 0>}
 ```
 
 Finally, when each cursor has a single argument of the C combinator. This works
 similarly to when the C combinator has two arguments but over a larger span. The
 middle cursor has its M word rewritten to an N word, and the cursors are rotated
-down twice. This reduction rule is broken up into steps to make more clear what
-is happening. As an implementation it happens all at once. The first step is to
-perform the reduction.
+down twice. The reduction here happens in two parts in conjunction with some
+downward rotations.
+
+The first part of the reduction is to prep all the state necessary for the
+second part. This means putting a new sentence in the Index and rewriting the M
+word in the middle cursor to an N word pointing to the bottom cursor before a
+rotation down occurs.
 
 ```
-{1 <M0 c d>}    {1 <N4 b d>}
+{1 <M0 c d>}    {1 <M0 c d>}
 {2 <M1 b 0>} -> {2 <N3 b 0>}, S_4 := <a c 0>
 {3 < C a 0>}    {3 < C a 0>}
 ```
 
-The next step is to rotate the cursors down twice.
+Then the cursors are rotated down:
 
 ```
-{1 <N4 b d>}    {0 < 0 0 0>}
-{2 <N3 b 0>} -> {0 < 0 0 0>}, S_3 := <C a 0>, S_2 := <N3 b 0>
-{3 < C a 0>}    {1 <N4 b d>}
+{1 <M0 c d>}    {0 < 0 0 0>}
+{2 <N3 b 0>} -> {1 <M0 c d>}, S_3 := <C a 0>
+{3 < C a 0>}    {2 <N3 b 0>}
+```
+
+The second part of the reduction adjusts the middle cursor to finish up the
+reduction:
+
+```
+{0 < 0 0 0>}    {0 < 0 0 0>}
+{1 <M0 c d>} -> {1 <N4 b d>}
+{2 <N3 b 0>}    {2 <N3 b 0>}
+```
+
+Finally the cursors are rotated down again to end on the newly reduced sentence.
+
+```
+{0 < 0 0 0>}    {0 < 0 0 0>}
+{1 <N4 b d>} -> {0 < 0 0 0>}, S_2 := <N3 b 0>
+{2 <N3 b 0>}    {1 <N4 b d>}
 ```
 
 #### B Combinator
