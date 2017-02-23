@@ -459,6 +459,12 @@ Computation halts if any of the above reduction forms aren't met.
 
 ## Todos
 
+### Proofs
+
+There are several properties that I claim in the above specification without any
+sort of proof. My claim appeals to intuition mostly, which is not enough in the
+long run. I need to formulate the desired properties and proofs.
+
 ### Major Additions
 
 There are still a couple additions that need to be worked in to the formal
