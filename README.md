@@ -381,35 +381,76 @@ already part of the reduction rule.
 
 As before, when the B combinator has two arguments in its cursor.
 
+Reduction:
+
 ```
 {0 < 0 0 0>}    {0 <0  0 0>}
-{1 <M0 c d>} -> {0 <0  0 0>}, S_2 := <B a b>, S_3 := <b c 0>
-{2 < B a b>}    {1 <a N3 d>}
+{1 <M0 c d>} -> {1 <a N3 d>}, S_3 := <b c 0>
+{2 < B a b>}    {2 <B  a b>}
+```
+
+Rotation:
+
+```
+{0 <0  0 0>}    {0 <0  0 0>}
+{1 <a N3 d>} -> {0 <0  0 0>}, S_2 := <B a b>
+{2 <B  a b>}    {1 <a N3 d>}
 ```
 
 And when it has a single argument in its cursor.
 
+Reduction:
+
 ```
 {0 < 0 0 0>}    {0 <0  0 0>}
-{1 <M0 b c>} -> {0 <0  0 0>}, S_2 := <B a 0>, S_3 := <b c 0>
-{2 < B a 0>}    {1 <a N3 0>}
+{1 <M0 b c>} -> {1 <a N3 0>}, S_3 := <b c 0>
+{2 < B a 0>}    {2 <B  a 0>}
 ```
 
-And when each cursor holds an argument. This is again broken up into two steps
-to aid clarity. First the reduction:
+Rotation:
 
 ```
-{1 <M0 c d>}    {1 < a N4 d>}
-{2 <M1 b 0>} -> {2 <N3  b 0>}, S_4 := <b c 0>
-{3 < B a 0>}    {3 < B  a 0>}
+{0 <0  0 0>}    {0 <0  0 0>}
+{1 <a N3 0>} -> {0 <0  0 0>}, S_2 := <B a 0>
+{2 <B  a 0>}    {1 <a N3 0>}
 ```
 
-And the double rotation down.
+And when each cursor holds an argument. This is performed in a similar manner to
+the C combinator.
+
+The first part of the reduction, setting up the state for the second portion.
+The `a` argument is temporarily stored in the top cursor, as the `c` argument
+will not be used in the final form and the `a` will be rotated out of the
+cursors.
 
 ```
-{1 < a N4 d>}    {0 <0  0 0>}
-{2 <N3  b 0>} -> {0 <0  0 0>}, S_3 := <B a 0>, S_2 := <N3 b 0>
-{3 < B  a 0>}    {1 <a N4 d>}
+{1 <M0 c d>}    {1 <M0 a d>}
+{2 <M1 b 0>} -> {2 <N3 b 0>}, S_4 := <b c 0>
+{3 < B a 0>}    {3 < B a 0>}
+```
+
+First downwards rotation:
+
+```
+{1 <M0 a d>}    {0 < 0 0 0>}
+{2 <N3 b 0>} -> {1 <M0 a d>}, S_3 := <B a 0>
+{3 < B a 0>}    {2 <N3 b 0>}
+```
+
+Second portion of reduction:
+
+```
+{0 < 0 0 0>}    {0 < 0  0 0>}
+{1 <M0 a d>} -> {1 < a N4 d>}
+{2 <N3 b 0>}    {2 <N3  b 0>}
+```
+
+And the final downwards rotation:
+
+```
+{0 < 0  0 0>}    {0 <0  0 0>}
+{1 < a N4 d>} -> {0 <0  0 0>}, S_2 := <N3 b 0>
+{2 <N3  b 0>}    {1 <a N4 d>}
 ```
 
 ### Halting
