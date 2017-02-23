@@ -84,10 +84,55 @@ from using actual words unless appropriate. Relevant words that can take on any
 valid word will be denoted by a lowercase variable whose meaning should be
 inferred from context. Irrelevant words are denoted by an underscore.
 
-### Nesting and Unnesting
+### Cursor Rotation
 
-Nesting is a core part of the operation of the machine, and descriptions of the
-actual reduction rules rely on it so I'll get it out of the way first.
+It was mentioned above that cursors could be rotated upwards or downwards. What
+follows is a more formal description of that process.
+
+Rotating the cursors down writes the bottom cursor to the Index while
+simultaneously pulling in a new top cursor from the Index. The middle cursor is
+copied to the bottom cursor, and the top cursor is copied to the middle cursor.
+
+```
+{2 <M1 _ _>}    {1      S_1}
+{3 <M2 _ _>} -> {2 <M1 _ _>}, S_4 := <a _ _>
+{4 < a _ _>}    {3 <M2 _ _>}
+```
+
+If a rotation down happens and the first word in the top cursor points to a
+non-existent index, then the top cursor ends with a null cursor.
+
+```
+{1 <M0 _ _>}    {0 < 0 0 0>}
+{2 <M1 _ _>} -> {1 <M0 _ _>}, S_3 := <a _ _>
+{3 < a _ _>}    {2 <M2 _ _>}
+```
+
+Similarly, if the top cursor is a null cursor, things proceed intuitively.
+
+```
+{0 < 0 0 0>}    {0 < 0 0 0>}
+{1 <M0 _ _>} -> {0 < 0 0 0>}, S_2 := <a _ _>
+{2 < a _ _>}    {1 <M2 _ _>}
+```
+
+Rotations down can only happen if the top cursor contains a null cursor or the
+first word of the top cursor is an unnesting word. Any other rotations down are
+invalid.
+
+Rotating the cursors up is the same process but in reverse. The top cursor is
+written out to the Index, while a new bottom cursor is fetched from the Index.
+The middle cursor is copied to the top cursor, and the bottom cursor is copied
+to the middle cursor. Rotations up can only happen if the first word in the
+bottom cursor is a nesting word.
+
+```
+{1 <M0 _ _>}    {2 <M1 _ _>}
+{2 <M1 _ _>} -> {3 <N4 _ _>}, S_1 := <M0 _ _>
+{3 <N4 _ _>}    {4      S_4}
+```
+
+### Nesting and Unnesting
 
 Recall that the nesting word encodes a pointer to a sentence in the Index. The
 basic idea of nesting is simply to rotate the cursors up by pulling the pointed
