@@ -234,11 +234,25 @@ Index.
 The second version is a nested version and spans two cursors. In addition to
 performing the reduction, the cursors are also rotated down.
 
+First the reduction:
+
 ```
 {0 < 0 0 0>}    {0 <0 0 0>}
-{1 <M0 b c>} -> {0 <0 0 0>}, S_2 := <K a 0>
-{2 < K a 0>}    {1 <a c 0>}
+{1 <M0 b c>} -> {1 <a c 0>}
+{2 < K a 0>}    {2 <K a 0>}
 ```
+
+Then the rotation:
+
+```
+{0 <0 0 0>}    {0 <0 0 0>}
+{1 <a c 0>} -> {0 <0 0 0>}, S_2 := <K a 0>
+{2 <K a 0>}    {1 <a c 0>}
+```
+
+Note that in this reduction the M word is overwritten in the middle cursor.
+Because this is immediately followed by a downward rotation this is fine and
+cannot result in an inconsistent state.
 
 #### W Combinator
 
