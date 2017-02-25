@@ -343,26 +343,26 @@ word in the middle cursor to an N word pointing to the bottom cursor before a
 rotation down occurs.
 
 ```
-{1 <M0 c d>}    {1 <M0 c d>}
-{2 <M1 b 0>} -> {2 <N3 b 0>}, S_4 := <a c 0>
-{3 < C a 0>}    {3 < C a 0>}
+{1 <M0 c d>}    {1 <M0 N4 d>}
+{2 <M1 b 0>} -> {2 <N3  b 0>}, S_4 := <a c 0>
+{3 < C a 0>}    {3 < C  a 0>}
 ```
 
 Then the cursors are rotated down:
 
 ```
-{1 <M0 c d>}    {0 < 0 0 0>}
-{2 <N3 b 0>} -> {1 <M0 c d>}, S_3 := <C a 0>
-{3 < C a 0>}    {2 <N3 b 0>}
+{1 <M0 N4 d>}    {0 < 0  0 0>}
+{2 <N3  b 0>} -> {1 <M0 N4 d>}, S_3 := <C a 0>
+{3 < C  a 0>}    {2 <N3  b 0>}
 ```
 
 The second part of the reduction adjusts the middle cursor to finish up the
 reduction:
 
 ```
-{0 < 0 0 0>}    {0 < 0 0 0>}
-{1 <M0 c d>} -> {1 <N4 b d>}
-{2 <N3 b 0>}    {2 <N3 b 0>}
+{0 < 0  0 0>}    {0 < 0 0 0>}
+{1 <M0 N4 d>} -> {1 <N4 b d>}
+{2 <N3  b 0>}    {2 <N3 b 0>}
 ```
 
 Finally the cursors are rotated down again to end on the newly reduced sentence.
