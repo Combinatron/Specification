@@ -424,25 +424,25 @@ will not be used in the final form and the `a` will be rotated out of the
 cursors.
 
 ```
-{1 <M0 c d>}    {1 <M0 a d>}
-{2 <M1 b 0>} -> {2 <N3 b 0>}, S_4 := <b c 0>
-{3 < B a 0>}    {3 < B a 0>}
+{1 <M0 c d>}    {1 <M0 a  d>}
+{2 <M1 b 0>} -> {2 <N3 b N4>}, S_4 := <b c 0>
+{3 < B a 0>}    {3 < B a  0>}
 ```
 
 First downwards rotation:
 
 ```
-{1 <M0 a d>}    {0 < 0 0 0>}
-{2 <N3 b 0>} -> {1 <M0 a d>}, S_3 := <B a 0>
-{3 < B a 0>}    {2 <N3 b 0>}
+{1 <M0 a  d>}    {0 < 0 0  0>}
+{2 <N3 b N4>} -> {1 <M0 a  d>}, S_3 := <B a 0>
+{3 < B a  0>}    {2 <N3 b N4>}
 ```
 
 Second portion of reduction:
 
 ```
-{0 < 0 0 0>}    {0 < 0  0 0>}
-{1 <M0 a d>} -> {1 < a N4 d>}
-{2 <N3 b 0>}    {2 <N3  b 0>}
+{0 < 0 0  0>}    {0 < 0  0 0>}
+{1 <M0 a  d>} -> {1 < a N4 d>}
+{2 <N3 b N4>}    {2 <N3  b 0>}
 ```
 
 And the final downwards rotation:
