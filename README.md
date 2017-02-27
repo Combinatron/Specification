@@ -56,21 +56,28 @@ the sentence table.
 Cursors are denoted by curly brackets, with the location of the sentence first
 and the sentence itself second. E.g. `{1 <B B C>}`
 
+A null cursor looks like `{0 <0 0 0>}`
+
+Specific cursors can be referenced by their index, starting with the bottom
+cursor at 0.  Specific words in a cursor can be referenced by their index, `0`,
+`1`, or `2`.  Example: `C0W2, `C2W0`, `C1W1`.
+
 ## Sentence Index
 
 The second major construct in the Combinatron is the sentence index, or
 sometimes just the Index. It is at a high level an index of the sentences that
 form the program. The sentence index supports the fetching of a sentence by its
-index. It supports the addition of new sentences to the index. And it supports
-the overwriting of sentences at an index. In the notation and formal semantics
-the Index is 1-based. There is no 0-index.
+index. It supports the addition of new sentences to the index, writing an N word
+at a specified cursor/word pointing to the new addition. It supports the
+overwriting of sentences at an index. In the notation and formal semantics the
+Index is 1-based. There is no 0-index.
 
 ### Notation
 
 The sentence index is simply noted as an `S`. Fetches are indicated by ASCII
 subscript syntax, e.g. `S_1`. Writes are indicated by a fetch with a bind
-notation, e.g. `S_1 := <B C K>`.  Additions are indicated by a plus, e.g.
-`S + <K W W>`.
+notation, e.g. `S_1 := <B C K>`.  Additions are indicated by a plus with an
+arrow indicating where to write the new location, e.g.  `S + <K W W> -> C1W1`.
 
 ## Semantics
 
@@ -273,7 +280,7 @@ Reduction, note that a new word needs to be written to the index at this point.
 
 ```
 {0 < 0 0 0>}    {0 < 0 0 0>}
-{1 <M0 b c>} -> {1 <N3 b c>}, S_3 := <a b 0>
+{1 <M0 b c>} -> {1 <N3 b c>}, S + <a b 0> -> C1W0
 {2 < W a 0>}    {2 < W a 0>}
 ```
 
@@ -300,7 +307,7 @@ Reduction:
 
 ```
 {0 < 0 0 0>}    {0 < 0 0 0>}
-{1 <M0 c d>} -> {1 <N3 b d>}, S_3 := <a c 0>
+{1 <M0 c d>} -> {1 <N3 b d>}, S + <a c 0> -> C1W0
 {2 < C a b>}    {2 < C a b>}
 ```
 
@@ -344,7 +351,7 @@ rotation down occurs.
 
 ```
 {1 <M0 c d>}    {1 <M0 N4 d>}
-{2 <M1 b 0>} -> {2 <N3  b 0>}, S_4 := <a c 0>
+{2 <M1 b 0>} -> {2 <N3  b 0>}, S + <a c 0> -> C2W1
 {3 < C a 0>}    {3 < C  a 0>}
 ```
 
@@ -385,7 +392,7 @@ Reduction:
 
 ```
 {0 < 0 0 0>}    {0 <0  0 0>}
-{1 <M0 c d>} -> {1 <a N3 d>}, S_3 := <b c 0>
+{1 <M0 c d>} -> {1 <a N3 d>}, S + <b c 0> -> C1W1
 {2 < B a b>}    {2 <B  a b>}
 ```
 
@@ -403,7 +410,7 @@ Reduction:
 
 ```
 {0 < 0 0 0>}    {0 <0  0 0>}
-{1 <M0 b c>} -> {1 <a N3 0>}, S_3 := <b c 0>
+{1 <M0 b c>} -> {1 <a N3 0>}, S + <b c 0> -> C1W1
 {2 < B a 0>}    {2 <B  a 0>}
 ```
 
@@ -425,7 +432,7 @@ cursors.
 
 ```
 {1 <M0 c d>}    {1 <M0 a  d>}
-{2 <M1 b 0>} -> {2 <N3 b N4>}, S_4 := <b c 0>
+{2 <M1 b 0>} -> {2 <N3 b N4>}, S + <b c 0> -> C1W2
 {3 < B a 0>}    {3 < B a  0>}
 ```
 
