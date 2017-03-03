@@ -460,9 +460,43 @@ And the final downwards rotation:
 {2 <N3  b 0>}    {1 <a N4 d>}
 ```
 
+#### I Combinator
+
+While the I combinator isn't directly used in the instruction set, the side
+effecting operations inherit its semantics. Thus it is good to have those
+semantics written down. I only takes a single argument, and so can only ever
+span one cursor.
+
+```
+{1 <I a b>} -> {1 <a b 0>}
+```
+
 ### Halting
 
 Computation halts if any of the above reduction forms aren't met.
+
+### Side Effects
+
+Side effects are modeled by special G and P words which Get and Put sentences in
+the Index. Each of these words behaves identically to an I combinator during
+reduction. Also introduced is a special location to store a single sentence. G
+words place the sentence retrieved in this location. P words look in this
+location for the sentence to write. This location is notated by V, and uses the
+same assignment notation already seen.
+
+Reducing a G word:
+
+```
+{1 <G2 a b>} -> {1 <a b 0>}, V := S_2
+````
+
+Reducing a P word:
+
+```
+{1 <P2 a b>} -> {1 <a b 0>}, S_2 := V
+```
+
+In this manner sentences can be manipulated in the sentence index as needed.
 
 ## Todos
 
