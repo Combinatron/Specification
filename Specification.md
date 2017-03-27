@@ -471,6 +471,12 @@ span one cursor.
 {1 <I a b>} -> {1 <a b 0>}
 ```
 
+#### Nesting
+
+It's sometimes possible to end up with a nesting word as the only word in a
+sentence. When this happens it is perfectly safe and valid to simply replace
+that sentence with the pointed to sentence.
+
 ### Halting
 
 Computation halts if any of the above reduction forms aren't met.
