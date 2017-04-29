@@ -8,6 +8,9 @@ just [B, C, K, and W combinators](https://en.wikipedia.org/wiki/B,_C,_K,_W_syste
 See [Specification.md](Specification.md) for the main description of how the
 Combinatron works.
 
+See [Language.md](Language.md) for a description of the language used to program
+the Combinatron machine.
+
 ## Contributing
 
 Corrections are welcome in the form of pull requests. Clarifications or
