@@ -11,6 +11,9 @@ Combinatron works.
 See [Language.md](Language.md) for a description of the language used to program
 the Combinatron machine.
 
+See [InstructionFormat.md](InstructionFormat.md) for a description of the binary
+instruction format of the Combinatron machine.
+
 ## Contributing
 
 Corrections are welcome in the form of pull requests. Clarifications or
