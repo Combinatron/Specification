@@ -16,6 +16,7 @@ them.
 0110 - P
 0111 - N
 1000 - M
+1001 - Y
 ```
 
 The intention is for the sentence index to live as a limited space area separate

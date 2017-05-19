@@ -504,6 +504,40 @@ Reducing a P word:
 
 In this manner sentences can be manipulated in the sentence index as needed.
 
+### Y Combinator
+
+The Y Combinator is implemented via the so called "knot-tying" method, where it
+is converted to a sentence that references itself. The reduction is broken down
+into four primitive steps here.
+
+First swap the beginning words of the last two cursors.
+
+```
+{1 <c d e>} -> {1 <Y d e>}
+{2 <Y a b>}    {2 <c a b>}
+```
+
+Then write an N word for the bottom cursor to the Y word.
+
+```
+{1 <Y d e>} -> {1 <N2 d e>}
+{2 <c a b>}    {2 < c a b>}
+```
+
+Then swap the beginning words of the last two cursors again.
+
+```
+{1 <N2 d e>} -> {1 < c d e>}
+{2 < c a b>}    {2 <N2 a b>}
+```
+
+Finally swap the first two words of the bottom cursor.
+
+```
+{1 < c d e>} -> {1 <c  d e>}
+{2 <N2 a b>}    {2 <a N2 b>}
+```
+
 ## Todos
 
 ### Proofs
