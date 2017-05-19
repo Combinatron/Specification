@@ -33,7 +33,7 @@ addresses.
 
 So the full instruction format is:
 
----|-------------
+----|------------
 0000 000000000000
 
 Where the first four bits are the instruction and the last fourteen bits are
